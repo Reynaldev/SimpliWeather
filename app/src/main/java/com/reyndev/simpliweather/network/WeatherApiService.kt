@@ -9,7 +9,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-private const val GEO_URL = "http://api.openweathermap.org/geo/1.0/"
+private const val GEO_URL = "https://api.openweathermap.org/geo/1.0/"
 private const val WEATHER_URL = "https://api.openweathermap.org/data/3.0/"
 
 val moshi = Moshi.Builder()
@@ -27,8 +27,12 @@ val retroWeather = Retrofit.Builder()
     .build()
 
 interface GeoApi {
-    @GET("direct?q=jakarta&appid=18ccbbd129b7bdecaaf072a9f9977f01")
-    suspend fun getGeo(): List<GeoModel>
+    @GET("direct")
+    suspend fun getGeo(
+        @Query("q") name: String,
+        @Query("limit") limit: Int,
+        @Query("appid") id: String
+    ): List<GeoModel>
 }
 
 interface WeatherApi {

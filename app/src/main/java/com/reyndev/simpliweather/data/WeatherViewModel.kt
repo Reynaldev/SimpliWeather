@@ -1,6 +1,5 @@
 package com.reyndev.simpliweather.data
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,11 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.reyndev.simpliweather.network.WeatherApiService
 import kotlinx.coroutines.launch
-import java.lang.StringBuilder
 
 enum class WeatherApiStatus { LOADING, DONE, ERROR }
 
 class WeatherViewModel : ViewModel() {
+    private val appId = "18ccbbd129b7bdecaaf072a9f9977f01"
+
     private val _status = MutableLiveData<WeatherApiStatus>()
     val status: LiveData<WeatherApiStatus> = _status
 
@@ -38,17 +38,30 @@ class WeatherViewModel : ViewModel() {
         getWeatherData()
     }
 
-    fun getGeoList() {
+    fun getGeoList(name: String) {
         viewModelScope.launch {
+            _status.value = WeatherApiStatus.LOADING
+
             try {
-                _geo.value = WeatherApiService.geoService.getGeo()
-                _location.value = _geo.value!![0]
+                _geo.value = WeatherApiService.geoService.getGeo(
+                    name,
+                    5,
+                    appId
+                )
+                _status.value = WeatherApiStatus.DONE
 
                 Log.i("WeatherViewModel", geo.value!![0].toString())
             } catch (e: Exception) {
+                _status.value = WeatherApiStatus.ERROR
+
                 Log.wtf("WeatherViewModel", "Failed to retrieve geo\n${e.message}")
             }
         }
+    }
+
+    fun setGeo(geo: GeoModel) {
+        _location.value = geo
+        getWeatherData()
     }
 
     fun getWeatherData() {
@@ -66,7 +79,7 @@ class WeatherViewModel : ViewModel() {
                         "daily",
                         "alerts"
                     ),
-                    "18ccbbd129b7bdecaaf072a9f9977f01"
+                    appId
                 )
                 _status.value = WeatherApiStatus.DONE
 

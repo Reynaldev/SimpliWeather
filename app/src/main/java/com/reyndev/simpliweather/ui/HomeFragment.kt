@@ -7,6 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.dialog.MaterialDialogs
+import com.reyndev.simpliweather.data.WeatherApiStatus
 import com.reyndev.simpliweather.data.WeatherModel
 import com.reyndev.simpliweather.data.WeatherViewModel
 import com.reyndev.simpliweather.databinding.FragmentHomeBinding
@@ -26,6 +30,11 @@ class HomeFragment : Fragment() {
         binding.viewModel = viewModel
         binding.homeFragment = this
 
+        viewModel.status.observe(viewLifecycleOwner) {
+            if (it == WeatherApiStatus.ERROR)
+                showErrorDialog()
+        }
+
         viewModel.weather.observe(viewLifecycleOwner) {
             setWeatherTemp(it.current.temp, binding.temp)
             setWeatherTemp(it.current.feelsLike, binding.tempFeel)
@@ -33,6 +42,20 @@ class HomeFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun showErrorDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Error")
+            .setMessage("Oops! I can't retrieve weather data\nCheck out your internet connection.")
+            .setPositiveButton("Retry") { dialog, _ ->
+                viewModel.getWeatherData()
+                dialog.dismiss()
+            }
+            .setNegativeButton("Exit") { _, _ ->
+                activity?.finish()
+            }
+            .show()
     }
 
     private fun setWeatherTemp(text: String, tv: TextView) {
@@ -50,5 +73,21 @@ class HomeFragment : Fragment() {
         }
 
         binding.humidity.text = strb
+    }
+
+    fun goToSearchFragment() {
+        findNavController().navigate(
+            HomeFragmentDirections.actionHomeFragmentToGeoSearchFragment()
+        )
+    }
+
+    fun appInfo() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("About SimpliWeather")
+            .setMessage("This app was made by ReynDev")
+            .setPositiveButton("Ok") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 }

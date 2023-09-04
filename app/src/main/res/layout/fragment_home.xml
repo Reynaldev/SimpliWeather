@@ -19,15 +19,27 @@
 
         <Button
             android:id="@+id/city_search"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_margin="18dp"
             android:text="@{viewModel.location.name}"
             android:textColor="@color/secondary"
+            android:onClick="@{() -> homeFragment.goToSearchFragment()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Jakarta" />
+
+        <ImageButton
+            style="@style/Widget.Material3.Button.IconButton"
+            android:id="@+id/info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="18dp"
+            android:src="@drawable/ic_info"
+            android:onClick="@{() -> homeFragment.appInfo()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             style="@style/TextAppearance.MaterialComponents.Headline1"
@@ -58,7 +70,6 @@
             android:layout_marginTop="32dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:padding="6dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/desc">
@@ -71,7 +82,8 @@
                 <LinearLayout
                     android:layout_width="175dp"
                     android:layout_height="100dp"
-                    android:layout_margin="2dp"
+                    android:layout_margin="4dp"
+                    android:gravity="center_vertical"
                     android:padding="18dp"
                     android:background="@drawable/background_panel"
                     android:orientation="vertical">
@@ -94,7 +106,8 @@
                 <LinearLayout
                     android:layout_width="175dp"
                     android:layout_height="100dp"
-                    android:layout_margin="2dp"
+                    android:layout_margin="4dp"
+                    android:gravity="center_vertical"
                     android:padding="18dp"
                     android:background="@drawable/background_panel"
                     android:orientation="vertical">
@@ -117,7 +130,8 @@
                 <LinearLayout
                     android:layout_width="175dp"
                     android:layout_height="100dp"
-                    android:layout_margin="2dp"
+                    android:layout_margin="4dp"
+                    android:gravity="center_vertical"
                     android:padding="18dp"
                     android:background="@drawable/background_panel"
                     android:orientation="vertical">
@@ -142,13 +156,13 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="2dp" >
+                android:orientation="vertical" >
 
                 <LinearLayout
                     android:layout_width="175dp"
                     android:layout_height="100dp"
-                    android:layout_margin="2dp"
+                    android:layout_margin="4dp"
+                    android:gravity="center_vertical"
                     android:padding="18dp"
                     android:background="@drawable/background_panel"
                     android:orientation="vertical">
@@ -170,7 +184,8 @@
                 <LinearLayout
                     android:layout_width="175dp"
                     android:layout_height="100dp"
-                    android:layout_margin="2dp"
+                    android:layout_margin="4dp"
+                    android:gravity="center_vertical"
                     android:padding="18dp"
                     android:background="@drawable/background_panel"
                     android:orientation="vertical">
@@ -192,7 +207,8 @@
                 <LinearLayout
                     android:layout_width="175dp"
                     android:layout_height="100dp"
-                    android:layout_margin="2dp"
+                    android:layout_margin="4dp"
+                    android:gravity="center_vertical"
                     android:padding="18dp"
                     android:background="@drawable/background_panel"
                     android:orientation="vertical">
