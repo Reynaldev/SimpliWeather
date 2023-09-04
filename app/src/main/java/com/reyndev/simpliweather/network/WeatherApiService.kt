@@ -7,36 +7,29 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
-private const val GEO_URL = "https://api.openweathermap.org/geo/1.0/"
-private const val WEATHER_URL = "https://api.openweathermap.org/data/3.0/"
+private const val BASE_URL = "https://api.openweathermap.org/"
 
 val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .build()
 
-val retroGeo = Retrofit.Builder()
+val retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
-    .baseUrl(GEO_URL)
+    .baseUrl(BASE_URL)
     .build()
 
-val retroWeather = Retrofit.Builder()
-    .addConverterFactory(MoshiConverterFactory.create(moshi))
-    .baseUrl(WEATHER_URL)
-    .build()
-
-interface GeoApi {
-    @GET("direct")
+interface WeatherApi {
+    @GET("geo/1.0/direct")
     suspend fun getGeo(
         @Query("q") name: String,
         @Query("limit") limit: Int,
         @Query("appid") id: String
     ): List<GeoModel>
-}
 
-interface WeatherApi {
-    @GET("onecall")
+    @GET("data/3.0/onecall")
     suspend fun getWeather(
         @Query("lat") lat: Double,
         @Query("lon") lon: Double,
@@ -47,11 +40,7 @@ interface WeatherApi {
 }
 
 object WeatherApiService {
-    val geoService: GeoApi by lazy {
-        retroGeo.create(GeoApi::class.java)
-    }
-
     val weatherService: WeatherApi by lazy {
-        retroWeather.create(WeatherApi::class.java)
+        retrofit.create(WeatherApi::class.java)
     }
 }

@@ -5,7 +5,8 @@ import com.squareup.moshi.Json
 data class GeoModel(
     val name: String,
     val lat: String,
-    val lon: String
+    val lon: String,
+    val state: String?
 )
 
 data class WeatherModel(

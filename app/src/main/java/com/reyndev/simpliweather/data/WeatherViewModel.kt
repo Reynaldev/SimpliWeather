@@ -30,7 +30,8 @@ class WeatherViewModel : ViewModel() {
         val newGeo = GeoModel(
             "Special Capital Region of Jakarta",
             (-6.1753942).toString(),
-            (106.827183).toString()
+            (106.827183).toString(),
+            null
         )
 
         _location.value = newGeo
@@ -43,7 +44,7 @@ class WeatherViewModel : ViewModel() {
             _status.value = WeatherApiStatus.LOADING
 
             try {
-                _geo.value = WeatherApiService.geoService.getGeo(
+                _geo.value = WeatherApiService.weatherService.getGeo(
                     name,
                     5,
                     appId

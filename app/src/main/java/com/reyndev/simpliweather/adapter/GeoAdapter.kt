@@ -15,6 +15,11 @@ class GeoAdapter(private val clickListener: GeoListener)
         : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(clickListener: GeoListener, geo: GeoModel) {
+            if (!geo.state.isNullOrBlank())
+                binding.geoName.text = "${geo.name}, ${geo.state}"
+            else
+                binding.geoName.text = geo.name
+
             binding.geo = geo
             binding.clickListener = clickListener
             binding.executePendingBindings()
@@ -41,7 +46,7 @@ class GeoAdapter(private val clickListener: GeoListener)
         }
 
         override fun areContentsTheSame(oldItem: GeoModel, newItem: GeoModel): Boolean {
-            return (oldItem.lat == newItem.lat) && (oldItem.lon == newItem.lon)
+            return oldItem.state == newItem.state
         }
     }
 }

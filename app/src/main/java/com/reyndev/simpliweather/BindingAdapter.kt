@@ -3,9 +3,11 @@ package com.reyndev.simpliweather
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.reyndev.simpliweather.adapter.GeoAdapter
 import com.reyndev.simpliweather.data.GeoModel
 import com.reyndev.simpliweather.data.WeatherApiStatus
@@ -34,6 +36,19 @@ fun apiStatus(imageView: ImageView, status: WeatherApiStatus) {
         WeatherApiStatus.ERROR -> {
             imageView.visibility = View.VISIBLE
             imageView.setImageResource(R.drawable.ic_error)
+        }
+    }
+}
+
+@BindingAdapter("imageUrl")
+fun imageUrl(imageView: ImageView, icon: String?) {
+    icon?.let {
+        val imgUrl = "https://openweathermap.org/img/wn/${icon}@2x.png"
+        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
+
+        imageView.load(imgUri) {
+            placeholder(R.drawable.loading_animation)
+            error(R.drawable.default_weather)
         }
     }
 }
