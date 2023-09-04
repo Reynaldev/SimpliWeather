@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="primary">#FFE0E0E0</color>
+    <color name="primaryVariant">#FF757575</color>
+    <color name="secondary">#FF424242</color>
+    <color name="secondaryVariant">#FF212121</color>
+
+    <!-- Light -->
+<!--    <color name="primaryLight">#FFE0E0E0</color>-->
+<!--    <color name="primaryVariantLight">#FFBDBDBD</color>-->
+<!--    <color name="secondaryLight">#FFE0E0E0</color>-->
+
+    <!-- Dark -->
+<!--    <color name="primaryDark">#FF212121</color>-->
+<!--    <color name="primaryVariantDark">#FF424242</color>-->
+<!--    <color name="secondaryDark">#FF616161</color>-->
+</resources>

@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SimpliWeather</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pressure_label">%s mbar</string>
+    <string name="wind_speed_label">%s m/s</string>
+    <string name="wind_direction_label">%s°</string>
+</resources>
