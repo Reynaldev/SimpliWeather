@@ -36,8 +36,8 @@ class HomeFragment : Fragment() {
         }
 
         viewModel.weather.observe(viewLifecycleOwner) {
-            setWeatherTemp(it.current.temp, binding.temp)
-            setWeatherTemp(it.current.feelsLike, binding.tempFeel)
+            setWeatherTemp(it.current.temp)
+            setWeatherTempFeel(it.current.feelsLike)
             setWeatherHumidity(it.current.humidity)
         }
 
@@ -58,13 +58,21 @@ class HomeFragment : Fragment() {
             .show()
     }
 
-    private fun setWeatherTemp(text: String, tv: TextView) {
+    private fun setWeatherTemp(text: String) {
+        val strb = StringBuilder(text).also {
+            it.indexOf('.').let { c -> it.deleteRange(c, it.length) }
+        }
+
+        binding.temp.text = strb
+    }
+
+    private fun setWeatherTempFeel(text: String) {
         val strb = StringBuilder(text).also {
             it.indexOf('.').let { c -> it.deleteRange(c, it.length) }
             it.append("°C")
         }
 
-        tv.text = strb
+        binding.tempFeel.text = strb
     }
 
     private fun setWeatherHumidity(text: String) {
