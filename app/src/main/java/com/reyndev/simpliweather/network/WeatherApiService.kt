@@ -12,11 +12,11 @@ import retrofit2.http.Query
 
 private const val BASE_URL = "https://api.openweathermap.org/"
 
-val moshi = Moshi.Builder()
+val moshi: Moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .build()
 
-val retrofit = Retrofit.Builder()
+val retrofit: Retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
     .baseUrl(BASE_URL)
     .build()
@@ -31,16 +31,19 @@ interface WeatherApi {
 
     @GET("data/3.0/onecall")
     suspend fun getWeather(
-        @Query("lat") lat: Double,
-        @Query("lon") lon: Double,
+        @Query("lat") lat: String,
+        @Query("lon") lon: String,
         @Query("units") units: String,
         @Query("exclude") exclude: Array<String>,
         @Query("appid") id: String
     ): WeatherModel
 }
 
-object WeatherApiService {
-    val weatherService: WeatherApi by lazy {
-        retrofit.create(WeatherApi::class.java)
+class WeatherApiService {
+    companion object {
+        val weatherService: WeatherApi by lazy {
+            retrofit.create(WeatherApi::class.java)
+        }
     }
 }
+

@@ -43,7 +43,7 @@ fun apiStatus(imageView: ImageView, status: WeatherApiStatus) {
 @BindingAdapter("imageUrl")
 fun imageUrl(imageView: ImageView, icon: String?) {
     icon?.let {
-        val imgUrl = "https://openweathermap.org/img/wn/${icon}@2x.png"
+        val imgUrl = "https://openweathermap.org/img/wn/${it}@2x.png"
         val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
 
         imageView.load(imgUri) {

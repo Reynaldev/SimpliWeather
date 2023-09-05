@@ -29,14 +29,16 @@ class WeatherViewModel : ViewModel() {
         // For startup, rather than making a new call to the API
         val newGeo = GeoModel(
             "Special Capital Region of Jakarta",
-            (-6.1753942).toString(),
-            (106.827183).toString(),
+            "-6.1753942",
+            "106.827183",
             null
         )
 
         _location.value = newGeo
 
         getWeatherData()
+
+        Log.i("WeatherViewModel", "WeahterViewModel initialized")
     }
 
     fun getGeoList(name: String) {
@@ -55,7 +57,7 @@ class WeatherViewModel : ViewModel() {
             } catch (e: Exception) {
                 _status.value = WeatherApiStatus.ERROR
 
-                Log.wtf("WeatherViewModel", "Failed to retrieve geo\n${e.message}")
+                Log.w("WeatherViewModel", "Failed to retrieve geo\n${e.message}")
             }
         }
     }
@@ -71,8 +73,8 @@ class WeatherViewModel : ViewModel() {
 
             try {
                 _weather.value = WeatherApiService.weatherService.getWeather(
-                    location.value!!.lat.toDouble(),
-                    location.value!!.lon.toDouble(),
+                    _location.value!!.lat,
+                    _location.value!!.lon,
                     "metric",
                     arrayOf(
                         "minutely",
@@ -84,11 +86,11 @@ class WeatherViewModel : ViewModel() {
                 )
                 _status.value = WeatherApiStatus.DONE
 
-                Log.i("WeatherViewModel", weather.value!!.toString())
+                Log.i("WeatherViewModel", _weather.value.toString())
             } catch (e: Exception) {
                 _status.value = WeatherApiStatus.ERROR
 
-                Log.wtf("WeatherViewModel", "Failed to retrieve weather\n${e.message}")
+                Log.w("WeatherViewModel", "Failed to retrieve weather\n${e.message}")
             }
         }
     }
